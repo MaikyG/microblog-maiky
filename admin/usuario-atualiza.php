@@ -17,9 +17,10 @@ if(empty($_POST['senha'])){
   $senha = $usuario ['senha'];
 } else {$senha = verificaSenha($_POST['senha'], $usuario['senha']);}
   /* caso contrario, se o usuario digitou alguma coisa no campo senha, precisaremos verificar a senha digitada. */
-};
 
-
+atualizarUsuario( $conexao, $id ,$nome, $email, $senha, $tipo);
+header("location:usuarios.php");
+}
 ?>
 
        

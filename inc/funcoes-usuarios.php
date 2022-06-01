@@ -34,7 +34,10 @@ function lerUsuarios( mysqli $conexao){
 
 
 // Função excluirUsuario: usada em usuario-exclui.php
-
+function excluirUsuario(mysqli $conexao, int $id){
+    $sql = "DELETE FROM usuarios WHERE id = $id";
+    mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+}
 // fim excluirUsuario
 
 
@@ -62,14 +65,13 @@ function verificaSenha(string $senhaFormulario, string $senhaBanco){
     };
     
 }
-
 // fim verificaSenha
 
 
 
 // Função atualizarUsuario: usada em usuario-atualiza.php
 function atualizarUsuario(mysqli $conexao, int $id, string $nome, string $email, string $senha, string $tipo){
-    $sql = "UPDATE usuarios SET nome='$nome', email='$email',senha='$senha',tipo='tipo' WHERE id = $id";
+    $sql = "UPDATE usuarios SET nome='$nome', email='$email',senha='$senha',tipo='$tipo' WHERE id = $id";
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }
 // fim atualizarUsuario
@@ -77,7 +79,11 @@ function atualizarUsuario(mysqli $conexao, int $id, string $nome, string $email,
 
 
 // Função buscarUsuario: usada em login.php
-
+function buscarUsuario(mysqli $conexao, string $email):array{
+    $sql = "SELECT id, nome, email, tipo, senha FROM usuarios WHERE email = '$email'";
+    $resultado = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+    return mysqli_fetch_assoc($resultado);
+}
 // fim buscarUsuario
 
 
