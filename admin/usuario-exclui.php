@@ -1,6 +1,7 @@
  <?php
  require "../inc/funcoes-sessao.php";
  require "../inc/funcoes-usuarios.php";
+ verificaAcessoAdmin();
 
  verificaAcesso();
 

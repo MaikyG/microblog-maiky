@@ -32,3 +32,11 @@ function logout(){
     header("location:../login.php?logout");
     die();
 }
+
+function verificaAcessoAdmin(){
+    if($_SESSION['tipo'] != 'admin'){
+        //redirecione para a pagina nao-autorizado
+        header("location:nao-autorizado.php");
+        die();
+    }
+}
