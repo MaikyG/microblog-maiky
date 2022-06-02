@@ -1,13 +1,29 @@
 <?php 
-require "../inc/cabecalho-admin.php"; 
+require "../inc/cabecalho-admin.php";
+require "../inc/funcoes-posts.php";
 
+if(isset($_POST['inserir'])){
+  $titulo = filter_input(INPUT_POST,'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
+  $texto = filter_input(INPUT_POST,'texto', FILTER_SANITIZE_SPECIAL_CHARS);
+  $resumo = filter_input(INPUT_POST,'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
+
+  $imagem = $_FILES['imagem'];
+
+  upload($imagem);//função de upload por enviar o arquivo para o HD do servidor
+
+  inserirPost($conexao,$titulo,$texto, $resumo, $imagen['name'], $_SESSION['id']);//funcão inserirPost (atenção: mandaremos apenas o name da imagem)
+
+  header("location:posts.php");
+}
 ?>
        
   <div class="row">
     <article class="col-12 bg-white rounded shadow my-1 py-4">
       <h2 class="text-center">Inserir Post</h2>
 
-      <form  class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
+      <!-- adicionar o atributo enctype
+    para habilitar o supporte de envio de arquivo via formulario -->
+      <form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
 
         <div class="form-group">
           <label for="titulo">Título:</label>
