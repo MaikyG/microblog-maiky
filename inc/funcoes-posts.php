@@ -11,8 +11,16 @@ function inserirPost(mysqli $conexao, string $titulo, string $texto, string $res
 
 
 /* Usada em posts.php */
-function lerPosts(mysqli $conexao):array {
-    $sql = "";
+function lerPosts(mysqli $conexao, int $idUsuarioLogado, string $tipoUsuarioLogado):array {
+    //seo tipo de usuario for admin
+    if ($tipoUsuarioLogado == 'admin') {
+        //sql que traga todos os posts
+        $sql = "SELECT posts.id, posts.titulo, posts.data, usuarios.nome AS autor FROM posts INNER JOIN usuarios ON posts.usuario_id = usuarios.id ORDER BY data DESC";
+    } else {
+        //senão, sql que traga os posts do editor
+        $sql = "SELECT id, titulo, data FROM posts WHERE usuario_id = $idUsuarioLogado ORDER BY data DESC";
+    };
+    
 
     $resultado = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
     $posts = [];
@@ -54,8 +62,27 @@ function excluirPost(mysqli $conexao){
 /* Funções utilitárias */
 
 /* Usada em post-insere.php e post-atualiza.php */
-function upload(){
-    
+function upload($arquivo){
+    //defininto o tipo de arquivos aceitos
+    $tipoValidos = ["image/png","image/jpeg","image/gif","image/svg+xml"];
+
+    // verificar se o arquivo enviado não e um dos aceitos
+    if(!in_array($arquivo['type'], $tipoValidos)){
+        die("<script>alert('Formato de arquivo invalido'); history.back();</script>");
+    };
+
+    $nome = $arquivo['name']; //$_FILES['arquivo']['name'];
+
+    //Acessando dados de acesso temporario ao arquivo
+    $temporario = $arquivo['tmp_name'];
+
+    //Pasta de destino do arquivo que esta sendo enviado
+    $destino = "../imagens/$nome";
+
+    /* se o processo de envio temporario para destino for feito com sucesso, então a função retorna verdadeiro (indicando o sucesso no processo) */
+    if ( move_uploaded_file ($temporario, $destino)) {
+     return true;   
+    }
 } // fim upload
 
 
