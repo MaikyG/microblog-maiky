@@ -11,7 +11,7 @@ if(isset($_POST['inserir'])){
 
   upload($imagem);//função de upload por enviar o arquivo para o HD do servidor
 
-  inserirPost($conexao,$titulo,$texto, $resumo, $imagen['name'], $_SESSION['id']);//funcão inserirPost (atenção: mandaremos apenas o name da imagem)
+  inserirPost($conexao,$titulo,$texto, $resumo, $imagem['name'], $_SESSION['id']);//funcão inserirPost (atenção: mandaremos apenas o name da imagem)
 
   header("location:posts.php");
 }

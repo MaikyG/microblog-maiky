@@ -1,7 +1,6 @@
  <?php
  require "../inc/funcoes-posts.php";
  require "../inc/funcoes-sessao.php";
- verificaAcessoAdmin();
  verificaAcesso();
 
  $idUsuarioLogado=$_SESSION['id'];
