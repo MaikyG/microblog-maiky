@@ -5,8 +5,10 @@ require "../inc/cabecalho-admin.php";
 $idUsuarioLogado = $_SESSION['id'];
 $tipoUsuarioLogado = $_SESSION['tipo'];
 
+
 $posts = lerPosts( $conexao, $idUsuarioLogado, $tipoUsuarioLogado);
 $quantidade = count ($posts);
+
 
 
 
@@ -37,20 +39,20 @@ $quantidade = count ($posts);
  <?php foreach($posts as $postes){?>
           <tr>
             <td> <?=$postes['titulo']?> </td>
-            <td> <?=$postes['data']?> </td>
+            <td> <?=formataData($postes['data'])?> </td>
 <?php if($tipoUsuarioLogado == 'admin'){ ?> 
             <td> <?=$postes['autor']?> </td>
 <?php }; ?>
             <td class="text-center">
 
               <a class="btn btn-warning btn-sm" 
-              href="post-atualiza.php">
+              href="post-atualiza.php?id=<?=$postes['id']?>">
                   Atualizar
               </a>
             </td>
             <td class="text-center">
               <a class="btn btn-danger btn-sm excluir"
-              href="post-exclui.php">
+              href="post-exclui.php?id=<?=$postes['id']?>">
                   Excluir
               </a>
             </td>
