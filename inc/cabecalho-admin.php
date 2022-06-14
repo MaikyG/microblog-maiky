@@ -1,4 +1,6 @@
 <?php
+//controla e monitora o trafego de dados no cabeçalho de cada requisição PHP
+ob_start();
 require "funcoes-sessao.php";
 verificaAcesso();
 
